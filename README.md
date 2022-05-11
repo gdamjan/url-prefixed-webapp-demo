@@ -2,7 +2,10 @@
 
 Let's test how to remount a Flask app under a different url prefix with nginx,
 without changing the application code. nginx will forward requests under /api to
-the flask application.
+the flask application. The Flask code doesn't know it will be accessed under the `/api` prefix later on,
+it's all configured by the environment (but for Flask we need to use gunicorn and set the SCRIPT_NAME env var).
+
+See the other branches for more examples.
 
 
 ## Quick start
