@@ -1,8 +1,8 @@
-# Flask app mounted on url prefix
+# FastAPI app mounted on url prefix
 
-Let's test how to remount a Flask app under a different url prefix with nginx,
+Let's test how to remount a FastAPI app under a different url prefix with nginx,
 without changing the application code. nginx will forward requests under /api to
-the flask application.
+the fastapi application.
 
 
 ## Quick start
@@ -14,37 +14,32 @@ the flask application.
 
 ```
 $ curl localhost/api/
-Hello World!
+{"message":"Hello World"}
 
 $ curl localhost/api/test
-Index is at: /api/
+"Index is at: http://localhost/api/"
 
 $ curl localhost/api/json
-{
-  "index": "http://localhost/api/",
-  "self": "http://localhost/api/json"
-}
+{"index":"http://localhost/api/","self":"http://localhost/api/json"}
 
 $ curl -i localhost/api/redirect
-HTTP/1.1 302 FOUND
+HTTP/1.1 307 Temporary Redirect
 …
-Location: /api/
+location: http://localhost/api/
 …
 ```
 
-## Chaging the port of flask
+## Chaging the port of fastapi app
 
 1. Change the port on the proxy_pass line in `nginx.conf`
-2. Change `HTTP_PORT` in the environments of the `flask` service
+2. Change `HTTP_PORT` in the environments of the `fastapi` service
 
-## Changing the flask app prefix mount
+## Changing the fastapi app prefix mount
 
 1. Change the location in `nginx.conf` (for ex. `location /api/v1 {`
-2. Change the proxy_pass line to include the new location (`proxy_pass http://flask:5001/api/v1;`)
-2. Change `SCRIPT_NAME=/api/v1` in the environments of the `flask` service
+2. Change `ROOT_PATH=/api/v1` in the environments of the `fastapi` service
 
 
 ## Reference
 
-* https://dlukes.github.io/flask-wsgi-url-prefix.html
-* https://docs.gunicorn.org/en/stable/run.html
+* https://fastapi.tiangolo.com/advanced/behind-a-proxy/

@@ -1,10 +1,8 @@
 services:
-  flask:
+  fastapi:
     build: .
     environment:
-      - SCRIPT_NAME=/api
-      - FLASK_DEBUG=1
-      - FLASK_ENV=development
+      - ROOT_PATH=/api
       - HTTP_PORT=5001
     stop_signal: SIGQUIT
 
@@ -15,4 +13,4 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     links:
-      - flask
+      - fastapi

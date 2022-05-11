@@ -1,23 +1,23 @@
-from flask import Flask, url_for, jsonify, redirect
-import os
+from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/')
-def index():
-    return 'Hello World!'
+@app.get('/')
+async def index():
+    return {"message": "Hello World"}
 
-@app.route('/test')
-def test():
-    return f"Index is at: {url_for('index')}"
+@app.get('/test')
+def test(request: Request):
+    return f"Index is at: {request.url_for('index')}"
 
-@app.route('/json')
-def json():
-    return jsonify({
-        'index': url_for('index', _external=True),
-        "self": url_for('json', _external=True)
-    })
+@app.get('/json')
+def json(request: Request):
+    return {
+        'index': request.url_for('index'),
+        'self': request.url_for('json')
+    }
 
-@app.route('/redirect')
-def redir():
-    return redirect(url_for('index'))
+@app.get('/redirect')
+async def redir(request: Request):
+    return RedirectResponse(request.url_for('index'))
