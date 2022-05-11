@@ -21,8 +21,8 @@ Index is at: /api/
 
 $ curl localhost/api/json
 {
-  "index": "/api/",
-  "self": "/api/json"
+  "index": "http://localhost/api/",
+  "self": "http://localhost/api/json"
 }
 
 $ curl -i localhost/api/redirect

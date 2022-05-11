@@ -13,7 +13,10 @@ def test():
 
 @app.route('/json')
 def json():
-    return jsonify({'index': url_for('index'), "self": url_for('json')})
+    return jsonify({
+        'index': url_for('index', _external=True),
+        "self": url_for('json', _external=True)
+    })
 
 @app.route('/redirect')
 def redir():
